@@ -13,6 +13,20 @@ const gv = (v, m = 2) => v * m
 const resetRotate = (c, angle) => c.rotate(angle)
 
 /**
+ * @name: 设置旋转角度
+ * @param {Object} ccanvas 组件的绘图上下文
+ * @param {Number} angle 角度
+ */
+const setRotate = (c, angle) => c.rotate(angle)
+
+/**
+ * @name: 获取弧度
+ * @param {Number} value 弧度值
+ * @return {Number} 弧度
+ */
+const getRadian = (value) => value * Math.PI / 180
+
+/**
  * 绘制圆角矩形
  * @param {Object} c - canvas 组件的绘图上下文
  * @param {Number} x - 矩形的 x 坐标
@@ -24,7 +38,7 @@ const resetRotate = (c, angle) => c.rotate(angle)
  * @param {String} [strokeStyle = '#D3D3D3'] - 矩形的边框色
  * @param {String} [fillStyle = 'transparent']   - 矩形的填充色
  */
-const drarRroundRect = ({
+const drawRroundRect = ({
   c,
   x,
   y,
@@ -165,7 +179,6 @@ const drawRect = ({
   c.closePath()
 }
 
-
 /**
  * 绘制圆形
  * @param {Object} c - canvas 组件的绘图上下文
@@ -193,6 +206,181 @@ const drawCircular = ({
   c.arc(x, y, w, h, 0, 2 * Math.PI)
 
   c.fill()
+  c.stroke()
+  c.closePath()
+}
+
+/**
+ * 绘制椭圆
+ * @param {Object} c - canvas 组件的绘图上下文
+ * @param {Number} x - 矩形的 x 坐标
+ * @param {Number} y - 矩形的 y 坐标
+ * @param {Number} rx - 椭圆长轴的半径
+ * @param {Number} ry - 椭圆短轴的半径
+ * @param {Number} rotate - 椭圆的旋转角度，以弧度表示(非角度度数)。
+ * @param {Number} startAngle - 将要绘制的起始点角度，从 x 轴测量，以弧度表示(非角度度数)。
+ * @param {Number} endAngle - 椭圆将要绘制的结束点角度，以弧度表示(非角度度数)
+ * @param {Boolean} anticlockwise - true:逆时针，false:顺时针
+ * @param {lineWidth} r - 矩形的边框宽度
+ * @param {String} [strokeStyle = '#D3D3D3'] - 矩形的边框色
+ * @param {String} [fillStyle = 'transparent'] - 矩形的填充色
+ */
+const drawEllipse = ({
+  c,
+  x,
+  y,
+  rx,
+  ry,
+  rotate,
+  startAngle,
+  endAngle,
+  anticlockwise = false,
+  strokeStyle = '#D3D3D3',
+  fillStyle = "transparent",
+  lineWidth = 2
+} = {}) => {
+  c.beginPath()
+  c.strokeStyle = strokeStyle
+  c.fillStyle = fillStyle
+  c.lineWidth = gv(lineWidth)
+
+  c.ellipse(x, y, rx, ry, rotate, startAngle, endAngle, anticlockwise)
+
+  c.fill()
+  c.stroke()
+  c.closePath()
+}
+
+/**
+ * @name: 三次贝塞尔曲线
+ * @param {Object} c - canvas 组件的绘图上下文
+ * @param {Number} cp1x - 第一个控制点的 x 轴坐标
+ * @param {Number} cp1y - 第一个控制点的 y 轴坐标
+ * @param {Number} cp2x - 第二个控制点的 x 轴坐标
+ * @param {Number} cp2y - 第二个控制点的 y 轴坐标
+ * @param {Number} x - 结束点的 x 轴坐标
+ * @param {Number} y - 结束点的 y 轴坐标
+ * @param {Number} lineWidth - 线宽
+ * @param {String} [strokeStyle = '#D3D3D3'] - 矩形的边框色
+ * @param {String} [fillStyle = 'transparent'] - 矩形的填充色
+ * @param {Boolean} isPoints - 是否显示点位 
+ */
+const drawBezierCurveTo = ({
+  c,
+  cp1x,
+  cp1y,
+  cp2x,
+  cp2y,
+  x,
+  y,
+  lineWidth = 2,
+  strokeStyle = '#D3D3D3',
+  fillStyle = "transparent",
+} = {}) => {
+  c.beginPath()
+  c.strokeStyle = strokeStyle
+  c.fillStyle = fillStyle
+  c.lineWidth = gv(lineWidth)
+
+  c.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)
+
+  c.stroke()
+  c.fill()
+  c.closePath()
+}
+
+/**
+ * @name: 三次贝塞尔曲线
+ * @param {Object} c - canvas 组件的绘图上下文
+ * @param {Array} list 坐标数组(二维数组)
+ *   @param {Number} cp1x - 第一个控制点的 x 轴坐标
+ *   @param {Number} cp1y - 第一个控制点的 y 轴坐标
+ *   @param {Number} cp2x - 第二个控制点的 x 轴坐标
+ *   @param {Number} cp2y - 第二个控制点的 y 轴坐标
+ *   @param {Number} x - 结束点的 x 轴坐标
+ *   @param {Number} y - 结束点的 y 轴坐标
+ * @param {Number} lineWidth - 线宽
+ * @param {String} [strokeStyle = '#D3D3D3'] - 矩形的边框色
+ */
+ const drawBezierCurveToList = ({
+  c,
+  list= [],
+  lineWidth = 2,
+  strokeStyle = '#D3D3D3',
+} = {}) => {
+  c.beginPath()
+  c.strokeStyle = strokeStyle
+  c.lineWidth = gv(lineWidth)
+
+  list.forEach((item) => {
+    c.bezierCurveTo(...item)
+  })
+
+  c.stroke()
+  c.closePath()
+}
+
+/**
+ * @name: 三次贝塞尔曲线(填充)
+ * @param {Object} c - canvas 组件的绘图上下文
+ * @param {Array} list 坐标数组(二维数组)
+ *   @param {Number} cp1x - 第一个控制点的 x 轴坐标
+ *   @param {Number} cp1y - 第一个控制点的 y 轴坐标
+ *   @param {Number} cp2x - 第二个控制点的 x 轴坐标
+ *   @param {Number} cp2y - 第二个控制点的 y 轴坐标
+ *   @param {Number} x - 结束点的 x 轴坐标
+ *   @param {Number} y - 结束点的 y 轴坐标
+ * @param {Number} lineWidth - 线宽
+ * @param {String} [strokeStyle = '#D3D3D3'] - 矩形的边框色
+ * @param {String} [fillStyle = 'transparent'] - 矩形的填充色
+ * @param {Boolean} isPoints - 是否显示点位 
+ */
+const drawBezierCurveToFill = ({
+  c,
+  list = [],
+  lineWidth = 2,
+  strokeStyle = '#D3D3D3',
+  fillStyle = "transparent",
+} = {}) => {
+  c.beginPath()
+  c.strokeStyle = strokeStyle
+  c.fillStyle = fillStyle
+  c.lineWidth = gv(lineWidth)
+
+  list.forEach((item) => {
+    c.bezierCurveTo(...item)
+  })
+
+  c.stroke()
+  c.fill()
+  c.closePath()
+}
+
+/**
+ * @name: 画直线
+ * @param {Object} c - canvas 组件的绘图上下文
+ * @param {Number} x - x 轴坐标
+ * @param {Number} y - y 轴坐标
+ * @param {Number} x1 - 线 x 轴坐标
+ * @param {Number} y1 - 线 y 轴坐标
+ * @param {Number} lineWidth - 线宽
+ */
+const drawLineTo = ({
+  c,
+  x,
+  y,
+  x1,
+  y1,
+  lineWidth = 2,
+  strokeStyle = '#D3D3D3',
+}) => {
+  c.beginPath()
+  c.strokeStyle = strokeStyle
+  c.lineWidth = gv(lineWidth)
+
+  c.moveTo(x, y)
+  c.lineTo(x1, y1)
+
   c.stroke()
   c.closePath()
 }
