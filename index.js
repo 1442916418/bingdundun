@@ -3,30 +3,30 @@ const w = 550 * m
 const h = 660 * m
 const colors = {
   /**
-   * 灰色
+   * 浅灰色
    */
-  c0: '#D3D3D3',
+  lightGrey: '#D3D3D3',
   /**
    * 黑色
    */
-  c1: '#2D2D2D',
+  black: '#2D2D2D',
   /**
    * 透明
    */
-  c2: 'transparent',
+  transparent: 'transparent',
   /**
    * 白色
    */
-  c3: '#FFFFFF',
+  white: '#FFFFFF',
   /**
-   * 眼睛灰色
+   * 深石板灰(眼睛底色)
    */
-  c4: '#2F4F4F',
+  darkSlateGray: '#2F4F4F',
 }
 // 脸圆圈颜色
 const colorList = ['#ADFF2F', '#FFD700', '#FF4500', '#6A5ACD', '#00FFFF']
 // 奥运五环颜色
-const colorList1 = ['#0081C8', '#000000', '#EE334E', '#6A5ACD', '#FCB131']
+const colorList1 = ['#0081C8', '#000000', '#EE334E', '#FCB131', '#00A651']
 
 const canvas = document.querySelector('canvas')
 
@@ -35,7 +35,7 @@ canvas.height = h
 
 const c = canvas.getContext('2d')
 
-c.fillStyle = colors.c3
+c.fillStyle = colors.white
 c.fillRect(0, 0, w, h)
 
 // 身体
@@ -67,7 +67,7 @@ drawSemicircle({
   w: gv(50),
   r: gv(25),
   strokeStyle: 'transparent',
-  fillStyle: colors.c1,
+  fillStyle: colors.black,
   angle: getRadian(-1.5)
 })
 
@@ -92,7 +92,7 @@ drawSemicircle({
   w: gv(50),
   r: gv(25),
   strokeStyle: 'transparent',
-  fillStyle: colors.c1,
+  fillStyle: colors.black,
   angle: getRadian(1)
 })
 
@@ -126,8 +126,8 @@ drawSemicircle({
   y: gv(225),
   w: gv(45),
   r: gv(20),
-  strokeStyle: colors.c2,
-  fillStyle: colors.c1
+  strokeStyle: colors.transparent,
+  fillStyle: colors.black
 })
 
 // 右胳膊(内)
@@ -135,7 +135,7 @@ c.beginPath()
 c.moveTo(gv(430), gv(240))
 c.lineTo(gv(476), gv(240))
 c.lineTo(gv(431), gv(293.5))
-c.fillStyle = colors.c1
+c.fillStyle = colors.black
 c.fill()
 c.closePath()
 
@@ -148,8 +148,8 @@ drawArcTo({
   x1: gv(410),
   y1: gv(300),
   r: 125,
-  strokeStyle: colors.c2,
-  fillStyle: colors.c1
+  strokeStyle: colors.transparent,
+  fillStyle: colors.black
 })
 
 // 右胳膊(内) 爱心
@@ -189,8 +189,8 @@ drawBezierCurveToFill({
   c,
   list: leftFillList,
   isPoints: true,
-  strokeStyle: colors.c1,
-  fillStyle: colors.c1
+  strokeStyle: colors.black,
+  fillStyle: colors.black
 })
 
 // 右大腿
@@ -198,14 +198,14 @@ const rightFillList = [
   [gv(380), gv(470), gv(375), gv(500), gv(380), gv(530)],
   [gv(380), gv(530), gv(380), gv(535), gv(340), gv(535)],
   [gv(340), gv(535), gv(335), gv(535), gv(335), gv(500)],
-  [gv(335), gv(500), gv(330), gv(495), gv(381), gv(470)],
+  [gv(335), gv(500), gv(333), gv(490), gv(381), gv(470)],
 ]
 drawBezierCurveToFill({
   c,
   list: rightFillList,
   isPoints: true,
-  strokeStyle: colors.c1,
-  fillStyle: colors.c1
+  strokeStyle: colors.black,
+  fillStyle: colors.black
 })
 
 // 左手手
@@ -213,7 +213,7 @@ const leftHeadBoxList = [
   [gv(150), gv(260), gv(120), gv(265), gv(80), gv(320)],
   [gv(80), gv(320), gv(70), gv(340), gv(80), gv(360)],
   [gv(80), gv(360), gv(90), gv(380), gv(130), gv(340)],
-  [gv(130), gv(340), gv(137), gv(330), gv(150), gv(320)],
+  [gv(130), gv(340), gv(139), gv(330), gv(150), gv(320)],
 ]
 drawBezierCurveToList({
   c,
@@ -224,17 +224,16 @@ drawBezierCurveToList({
 const rightHeadFillList = [
   [gv(150), gv(270), gv(120), gv(275), gv(85), gv(330)],
   [gv(85), gv(330), gv(80), gv(340), gv(90), gv(350)],
-  [gv(90), gv(350), gv(105), gv(360), gv(125), gv(330)],
-  [gv(125), gv(330), gv(137), gv(315), gv(150), gv(310)],
+  [gv(90), gv(350), gv(105), gv(360), gv(126), gv(330)],
+  [gv(125), gv(330), gv(140), gv(315), gv(150), gv(310)],
 ]
 drawBezierCurveToFill({
   c,
   list: rightHeadFillList,
   isPoints: true,
-  strokeStyle: colors.c1,
-  fillStyle: colors.c1
+  strokeStyle: colors.black,
+  fillStyle: colors.black
 })
-
 
 // 中间部分
 colorList.forEach((color, i) => {
@@ -261,8 +260,8 @@ drawEllipse({
   rotate: getRadian(-30),
   startAngle: 0,
   endAngle: 2 * Math.PI,
-  strokeStyle: colors.c2,
-  fillStyle: colors.c1,
+  strokeStyle: colors.transparent,
+  fillStyle: colors.black,
 })
 
 // 左熊猫眼(白眼圈)
@@ -272,8 +271,8 @@ drawCircular({
   y: gv(218),
   w: gv(16),
   h: gv(16),
-  strokeStyle: colors.c2,
-  fillStyle: colors.c3
+  strokeStyle: colors.transparent,
+  fillStyle: colors.white
 })
 
 // 左熊猫眼(灰眼圈)
@@ -283,8 +282,8 @@ drawCircular({
   y: gv(218),
   w: gv(12),
   h: gv(12),
-  strokeStyle: colors.c2,
-  fillStyle: colors.c4
+  strokeStyle: colors.transparent,
+  fillStyle: colors.darkSlateGray
 })
 
 // 左熊猫眼(黑眼球)
@@ -294,8 +293,8 @@ drawCircular({
   y: gv(220),
   w: gv(6),
   h: gv(6),
-  strokeStyle: colors.c2,
-  fillStyle: colors.c1
+  strokeStyle: colors.transparent,
+  fillStyle: colors.black
 })
 
 // 左熊猫眼(黑眼球上的白色圈)
@@ -305,8 +304,8 @@ drawCircular({
   y: gv(213),
   w: gv(4),
   h: gv(4),
-  strokeStyle: colors.c2,
-  fillStyle: colors.c3
+  strokeStyle: colors.transparent,
+  fillStyle: colors.white
 })
 
 // 右熊猫眼(黑眼圈)
@@ -319,8 +318,8 @@ drawEllipse({
   rotate: getRadian(30),
   startAngle: 0,
   endAngle: 2 * Math.PI,
-  strokeStyle: colors.c2,
-  fillStyle: colors.c1,
+  strokeStyle: colors.transparent,
+  fillStyle: colors.black,
 })
 
 // 左熊猫眼(白眼圈)
@@ -330,8 +329,8 @@ drawCircular({
   y: gv(218),
   w: gv(16),
   h: gv(16),
-  strokeStyle: colors.c2,
-  fillStyle: colors.c3
+  strokeStyle: colors.transparent,
+  fillStyle: colors.white
 })
 
 // 右熊猫眼(灰眼圈)
@@ -341,8 +340,8 @@ drawCircular({
   y: gv(218),
   w: gv(12),
   h: gv(12),
-  strokeStyle: colors.c2,
-  fillStyle: colors.c4
+  strokeStyle: colors.transparent,
+  fillStyle: colors.darkSlateGray
 })
 
 // 左熊猫眼(黑眼球)
@@ -352,8 +351,8 @@ drawCircular({
   y: gv(220),
   w: gv(6),
   h: gv(6),
-  strokeStyle: colors.c2,
-  fillStyle: colors.c1
+  strokeStyle: colors.transparent,
+  fillStyle: colors.black
 })
 
 // 左熊猫眼(黑眼球上的白色圈)
@@ -363,8 +362,8 @@ drawCircular({
   y: gv(213),
   w: gv(4),
   h: gv(4),
-  strokeStyle: colors.c2,
-  fillStyle: colors.c3
+  strokeStyle: colors.transparent,
+  fillStyle: colors.white
 })
 
 // 鼻子
@@ -375,8 +374,8 @@ drawRroundRect({
   w: gv(25),
   h: gv(12),
   r: gv(6),
-  strokeStyle: colors.c2,
-  fillStyle: colors.c1
+  strokeStyle: colors.transparent,
+  fillStyle: colors.black
 })
 
 // 鼻子尖尖
@@ -389,8 +388,8 @@ drawArcTo({
   x1: gv(273),
   y1: gv(233),
   r: 30,
-  strokeStyle: colors.c2,
-  fillStyle: colors.c1
+  strokeStyle: colors.transparent,
+  fillStyle: colors.black
 })
 
 // 嘴巴
@@ -403,23 +402,55 @@ drawArcTo({
   x1: gv(245),
   y1: gv(260),
   r: 160,
-  strokeStyle: colors.c2,
-  fillStyle: colors.c1
+  strokeStyle: colors.transparent,
+  fillStyle: colors.black
 })
 
-// // 北京 2022
+// 北京 2022     
 c.beginPath()
 c.font = 'italic bold 30px sans-serif'
-c.fillStyle = colors.c1
-c.fillText('BEIJING 2022', gv(235), gv(400))
+c.fillStyle = colors.black
+c.fillText('BEIJING 2022', gv(235), gv(380))
 c.closePath()
 
 // 奥运五环
 drawCircular({
   c,
-  x: gv(245),
-  y: gv(420),
-  w: gv(10),
-  h: gv(10),
+  x: gv(260),
+  y: gv(400),
+  w: gv(11),
+  h: gv(11),
   strokeStyle: colorList1[0]
+})
+drawCircular({
+  c,
+  x: gv(287),
+  y: gv(400),
+  w: gv(11),
+  h: gv(11),
+  strokeStyle: colorList1[1]
+})
+drawCircular({
+  c,
+  x: gv(314),
+  y: gv(400),
+  w: gv(11),
+  h: gv(11),
+  strokeStyle: colorList1[2]
+})
+drawCircular({
+  c,
+  x: gv(273),
+  y: gv(410),
+  w: gv(11),
+  h: gv(11),
+  strokeStyle: colorList1[3]
+})
+drawCircular({
+  c,
+  x: gv(301),
+  y: gv(410),
+  w: gv(11),
+  h: gv(11),
+  strokeStyle: colorList1[4]
 })
